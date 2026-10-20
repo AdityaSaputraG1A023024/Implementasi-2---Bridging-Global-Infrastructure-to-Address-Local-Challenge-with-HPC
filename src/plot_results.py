@@ -37,6 +37,9 @@ def create_figures(csv_path: Path, output_dir: Path) -> None:
               marker="o", label="Strong scaling")
     axis.plot(weak_parallel["processes"], weak_parallel["median_seconds"],
               marker="s", label="Weak scaling")
+    axis.set_xticks(sorted(set(strong_parallel["processes"]).union(
+        weak_parallel["processes"]
+    )))
     axis.set(xlabel="Jumlah proses", ylabel="Waktu median (detik)",
              title="Waktu eksekusi benchmark")
     axis.grid(True, alpha=0.3)
@@ -51,6 +54,7 @@ def create_figures(csv_path: Path, output_dir: Path) -> None:
               marker="o", label="Speedup terukur")
     axis.plot(strong_parallel["processes"], strong_parallel["processes"],
               linestyle="--", label="Speedup ideal")
+    axis.set_xticks(strong_parallel["processes"])
     axis.set(xlabel="Jumlah proses", ylabel="Speedup",
              title="Speedup strong scaling")
     axis.grid(True, alpha=0.3)
@@ -66,6 +70,9 @@ def create_figures(csv_path: Path, output_dir: Path) -> None:
     axis.plot(weak_parallel["processes"], weak_parallel["efficiency"],
               marker="s", label="Weak scaling")
     axis.axhline(1.0, color="gray", linestyle=":", label="Efisiensi ideal")
+    axis.set_xticks(sorted(set(strong_parallel["processes"]).union(
+        weak_parallel["processes"]
+    )))
     axis.set(xlabel="Jumlah proses", ylabel="Efisiensi",
              title="Efisiensi terhadap jumlah proses")
     axis.grid(True, alpha=0.3)

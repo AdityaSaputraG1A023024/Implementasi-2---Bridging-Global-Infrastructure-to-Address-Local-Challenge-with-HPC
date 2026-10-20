@@ -83,9 +83,27 @@ Data tabel dan grafik berasal dari `reports/hasil_benchmark.csv`. Setiap angka w
 | 2 | 4 | 1,054 +/- 0,018 | 0,061 | 0,030 |
 | 4 | 8 | 1,252 +/- 0,020 | 0,100 | 0,025 |
 | 8 | 16 | 1,717 +/- 0,016 | 0,118 | 0,015 |
-![Waktu eksekusi](reports/figures/waktu_eksekusi.png)
+
+### Grafik hasil
+
+Grafik disusun dari metrik dasar ke metrik turunan: waktu eksekusi, speedup,
+lalu efisiensi. Sumbu jumlah proses hanya menampilkan konfigurasi yang diukur
+(1, 2, 4, dan 8 proses).
+
+**Waktu eksekusi.** Strong scaling mempertahankan ukuran masalah, sedangkan
+weak scaling menambah ukuran masalah seiring jumlah proses. Garis baseline
+serial hanya menjadi pembanding untuk strong scaling.
+
+![Waktu eksekusi strong dan weak scaling](reports/figures/waktu_eksekusi.png)
+
+**Speedup strong scaling.** Garis ideal linear menjadi acuan; speedup aktual
+di bawah 1 menunjukkan konfigurasi multiprocessing lebih lambat daripada
+baseline serial pada pengukuran ini.
 
 ![Speedup strong scaling dan garis ideal](reports/figures/speedup.png)
+
+**Efisiensi.** Grafik membandingkan efisiensi strong dan weak scaling terhadap
+garis efisiensi ideal.
 
 ![Efisiensi strong dan weak scaling](reports/figures/efisiensi.png)
 
@@ -107,20 +125,5 @@ Pelajaran utama: pekerjaan independen mudah dibagi, tetapi jumlah proses saja ti
 ## Penjelasan baris template SLURM
 
 `#SBATCH --job-name` memberi nama; `--nodes` meminta jumlah node; `--ntasks` menentukan task; `--time` membatasi waktu; dan `--output` menentukan berkas log. `set -euo pipefail` menghentikan skrip saat terjadi kegagalan. `module load` memuat Python cluster, `source` mengaktifkan lingkungan virtual, `cd` berpindah ke direktori pengiriman, dan kedua perintah `python` menjalankan benchmark lalu grafik. File ini hanya TEMPLATE dan belum diuji pada SLURM.
-
-## Mengunggah ke GitHub
-
-Buat repositori GitHub bernama `benchmark-komputasi-paralel`, lalu jalankan dari folder proyek:
-
-```powershell
-git init
-git add README.md requirements.txt .gitignore src tests hpc reports
-git commit -m "Tambahkan benchmark skalabilitas komputasi paralel"
-git branch -M main
-git remote add origin https://github.com/USERNAME/benchmark-komputasi-paralel.git
-git push -u origin main
-```
-
-Ganti `USERNAME` dengan nama akun GitHub. Jika remote `origin` sudah ada, jalankan `git remote set-url origin ...` alih-alih menambahkannya lagi.
 
 
